@@ -1,0 +1,34 @@
+{
+  "name": "fetch-stub",
+  "version": "1.0.0",
+  "description": "This library wraps the fetch function and responds with a local json",
+  "author": {
+    "name": "gianlucaparadise",
+    "email": "gianlucaparadise@gmail.com",
+    "url": "https://github.com/gianlucaparadise"
+  },
+  "license": "Apache-2.0",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "fetch mock",
+    "stub",
+    "mock server",
+    "stub server",
+    "local server"
+  ],
+  "devDependencies": {
+    "@types/jest": "^23.3.9",
+    "@types/node": "^10.12.9",
+    "jest": "^20.0.4"
+  },
+  "dependencies": {
+    "whatwg-fetch": "^2.0.4"
+  }
+}

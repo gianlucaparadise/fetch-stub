@@ -1,0 +1,90 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "FetchStub MockConfig schema",
+	"description": "Schema for the configuration file of the FetchStub library",
+	"type": "object",
+	"definitions": {
+		"queriesDef": {
+			"type": "object",
+			"description": "Map of key-value pairs that must be in the querystring",
+			"patternProperties": {
+				".*": {
+					"type": "string"
+				}
+			}
+		},
+		"pathDef": {
+			"type": "object",
+			"description": "Path name rules",
+			"properties": {
+				"base": {
+					"type": "string",
+					"description": "Exact Path name of the request"
+				},
+				"queries": {
+					"$ref": "#/definitions/queriesDef"
+				}
+			}
+		},
+		"bodyPatternsDef": {
+			"type": "object",
+			"description": "Body rules",
+			"properties": {
+				"contains": {
+					"type": "string",
+					"description": "Exact string to search in the body"
+				},
+				"matches": {
+					"type": "string",
+					"description": "RegEx to match against the body"
+				}
+			}
+		},
+		"descriptorDef": {
+			"type": "object",
+			"description": "Request descriptor",
+			"properties": {
+				"method": {
+					"enum": [
+						"GET",
+						"POST",
+						"PUT",
+						"DELETE",
+						"HEAD",
+						"OPTIONS"
+					],
+					"description": "Method name of the request"
+				},
+				"path": {
+					"$ref": "#/definitions/pathDef"
+				},
+				"bodyPatterns": {
+					"$ref": "#/definitions/bodyPatternsDef"
+				},
+				"responseFile": {
+					"type": "string",
+					"description": "Path to the json file that represents the response"
+				}
+			},
+			"required": [
+				"method",
+				"responseFile"
+			]
+		}
+	},
+	"properties": {
+		"requests": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/descriptorDef"
+			}
+		},
+		"forward": {
+			"type": "boolean",
+			"description": "True when you want to send the request if no descriptor matches. Default: false."
+		}
+	},
+	"required": [
+		"requests"
+	]
+}

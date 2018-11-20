@@ -1,0 +1,33 @@
+{
+	"$schema": "./mock.schema.json",
+	"forward": false,
+	"requests": [
+		{
+			"method": "GET",
+			"path": {
+				"base": "/api/user",
+				"queries": {
+					"id": "7"
+				}
+			},
+			"responseFile": "./getUser.json"
+		},
+		{
+			"method": "POST",
+			"path": {
+				"base": "/api/changePassword"
+			},
+			"responseFile": "./changePassword.json"
+		},
+		{
+			"method": "POST",
+			"path": {
+				"base": "/api/registerUser"
+			},
+			"bodyPatterns": {
+				"matches": "['\"]name['\"]\\s*:\\s*['\"]mario['\"]"
+			},
+			"responseFile": "./marioRegistration.json"
+		}
+	]
+}

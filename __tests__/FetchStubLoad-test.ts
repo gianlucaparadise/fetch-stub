@@ -1,6 +1,6 @@
 import FetchStub, { MockConfig } from "../src";
 
-//import 'whatwg-fetch'
+import 'whatwg-fetch'
 
 const config: MockConfig = {
 	requests: [
@@ -15,82 +15,50 @@ const config: MockConfig = {
 };
 
 if (!(global as any).fetch) {
-	console.log('FROM JEST: Fetch not installed in global.');
+	console.log('Fetch not installed in global.');
 }
 else {
-	console.log("FROM JEST: Fetch in global");
+	console.log("Fetch in global");
 }
 
 if (!window.fetch) {
-	console.log('FROM JEST: Fetch not installed in window.');
+	console.log('Fetch not installed in window.');
 }
 else {
-	console.log("FROM JEST: Fetch in window");
+	console.log("Fetch in window");
 }
 
-// TODO: test load/unload stub
-// TODO: test if fetch is present
-
-// TODO: check what if I run FetchStub.load twice (it should wrap fetch twice)
-FetchStub.load(config);
-
 describe('FetchStub Config tests', () => {
-	it('should fail when whatwg-fetch is not loaded', () => {
+	// TODO: understand how to test this
+	// it('should fail when fetch is missing', () => {
+	// 	expect(() => {
+	// 		FetchStub.load(config);
+	// 	}).toThrow(FetchNotInstalledError);
+	// });
 
+	it('fetch should have stub property', () => {
+		FetchStub.load(config);
+		expect((fetch as any).isStub).toBe(true);
 	});
 
-	it('should load and unload FetchStub', () => {
+	// N.B. this must be the last test because unloads FetchStub
+	it('should load and unload FetchStub', async () => {
+		FetchStub.load(config);
 
-	});
-
-	it('should fail when FetchStub is loaded twice', () => {
-
-	});
-
-	it('should match simple get request', async () => {
 		const inputRequest = new Request('http://example.com/simple/api');
-		const response = await fetch(inputRequest);
 
-		expect(response).not.toBeNull();
+		// Here fetch is in stub, I expect the mocked answer
+		const responseStub = await fetch(inputRequest);
+		expect(responseStub).not.toBeNull();
 
-		const body = await response.json();
-		expect(body).toEqual({ file: 'simpleGet' });
-	});
+		const bodyStub = await responseStub.json();
+		expect(bodyStub).toEqual({ file: 'simpleGet' });
 
-	it('should match simple get request with querystring', async () => {
-		const inputRequest = new Request('http://example.com/simple/query?gianni=mar+io');
-		const response = await fetch(inputRequest);
-
-		expect(response).not.toBeNull();
-
-		const body = await response.json();
-		expect(body).toEqual({ file: 'simpleQuery' });
-	});
-
-	it('should match simple post request', async () => {
-		const bodyInput = {
-			mar: "io"
-		};
-		const bodyString = JSON.stringify(bodyInput);
-		const inputRequest = new Request('http://example.com/simple/post', { method: 'POST', body: bodyString });
-		const response = await fetch(inputRequest);
-
-		expect(response).not.toBeNull();
-
-		const body = await response.json();
-		expect(body).toEqual({ file: 'simplePost' });
-	});
-
-	it('should not match simple post request', async () => {
-		const bodyInput = {
-			mar: "io"
-		};
-		const bodyString = JSON.stringify(bodyInput);
-		const inputRequest = new Request('http://example.com/simple/post/null', { method: 'POST', body: bodyString });
+		FetchStub.unload();
 
 		try {
 			// this will throw a 404
-			const response = await fetch(inputRequest);
+			const responseWeb = await fetch(inputRequest);
 		} catch (error) {
 			expect(error).not.toBeNull();
 		}

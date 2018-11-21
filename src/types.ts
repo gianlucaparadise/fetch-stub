@@ -79,7 +79,7 @@ export class NoConfigError extends Error { }
  */
 export class FetchNotInstalledError extends Error { }
 
-/**
- * This exception is thrown when you try to load FetchStub twice
- */
-export class ReloadError extends Error { }
+// /**
+//  * This exception is thrown when you try to load FetchStub twice
+//  */
+// export class ReloadError extends Error { }

@@ -24,5 +24,3 @@ export declare class NoConfigError extends Error {
 }
 export declare class FetchNotInstalledError extends Error {
 }
-export declare class ReloadError extends Error {
-}

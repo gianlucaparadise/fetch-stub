@@ -9,24 +9,26 @@ const config: MockConfig = {
 			path: {
 				base: '/simple/api'
 			},
-			responseFile: 'simpleGet'
+			responseJson: {
+				result: 'simpleGet'
+			}
 		}
 	]
 };
 
-if (!(global as any).fetch) {
-	console.log('Fetch not installed in global.');
-}
-else {
-	console.log("Fetch in global");
-}
+// if (!(global as any).fetch) {
+// 	console.log('Fetch not installed in global.');
+// }
+// else {
+// 	console.log("Fetch in global");
+// }
 
-if (!window.fetch) {
-	console.log('Fetch not installed in window.');
-}
-else {
-	console.log("Fetch in window");
-}
+// if (!window.fetch) {
+// 	console.log('Fetch not installed in window.');
+// }
+// else {
+// 	console.log("Fetch in window");
+// }
 
 describe('FetchStub Config tests', () => {
 	// TODO: understand how to test this
@@ -52,7 +54,7 @@ describe('FetchStub Config tests', () => {
 		expect(responseStub).not.toBeNull();
 
 		const bodyStub = await responseStub.json();
-		expect(bodyStub).toEqual({ file: 'simpleGet' });
+		expect(bodyStub).toEqual({ result: 'simpleGet' });
 
 		FetchStub.unload();
 

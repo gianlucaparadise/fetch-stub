@@ -14,7 +14,8 @@ export declare type RequestDescriptor = {
     method: HttpMethod;
     path?: PathMatcher;
     bodyPatterns?: BodyMatcher;
-    responseFile: string;
+    responseJson: object;
+    responseFile?: string;
 };
 export declare type MockConfig = {
     forward?: boolean;

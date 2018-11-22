@@ -51,7 +51,8 @@ export type RequestDescriptor = {
 	method: HttpMethod,
 	path?: PathMatcher,
 	bodyPatterns?: BodyMatcher,
-	responseFile: string
+	responseJson: object,
+	responseFile?: string
 }
 
 export type MockConfig = {

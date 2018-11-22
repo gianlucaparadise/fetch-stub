@@ -2,10 +2,6 @@ import { MockConfig, BodyMatcher, QueryMatcher, PathMatcher, RequestDescriptor }
 import { logError } from './Helpers';
 import { UrlWithParsedQuery, parse as urlParse } from 'url';
 
-//import { Request, Response } from 'whatwg-fetch'
-//import { url } from 'url'
-//const querystring = require('querystring');
-
 export class RequestMatcher {
 	config: MockConfig;
 
@@ -43,8 +39,9 @@ export class RequestMatcher {
 		}
 		if (!d) return null; // no descriptor matches
 
-		let responsePath = d.responseFile;
-		let responseBody = retrieveResponseFile(responsePath);
+		//let responsePath = d.responseFile;
+		//let responseBody = retrieveResponseFile(responsePath);
+		let responseBody = d.responseJson;
 
 		let stringBody = JSON.stringify(responseBody);
 		let response = new Response(stringBody);
@@ -170,8 +167,7 @@ export async function matchBody(input: any, matchBody?: BodyMatcher): Promise<bo
  * @param responsePath 
  */
 export function retrieveResponseFile(responsePath: string): any {
-	// todo: read file
-	// require(responsePath);
+	// todo: understand how to read file across all javascript environments (NodeJs, React Native, Browser)
 	return {
 		file: responsePath
 	}

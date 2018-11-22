@@ -63,12 +63,16 @@
 				},
 				"responseFile": {
 					"type": "string",
-					"description": "Path to the json file that represents the response"
+					"description": "Path to the json file that represents the response (currently not working)"
+				},
+				"responseJson": {
+					"type": "object",
+					"description": "Response to return in json format"
 				}
 			},
 			"required": [
 				"method",
-				"responseFile"
+				"responseJson"
 			]
 		}
 	},
@@ -81,7 +85,7 @@
 		},
 		"forward": {
 			"type": "boolean",
-			"description": "True when you want to send the request if no descriptor matches. Default: false."
+			"description": "True when you want to send the request if no descriptor matches. Default: false. (currently not working)"
 		}
 	},
 	"required": [

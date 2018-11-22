@@ -10,14 +10,18 @@
 					"id": "7"
 				}
 			},
-			"responseFile": "./getUser.json"
+			"responseJson": {
+				"user": "John Doe"
+			}
 		},
 		{
 			"method": "POST",
 			"path": {
 				"base": "/api/changePassword"
 			},
-			"responseFile": "./changePassword.json"
+			"responseJson": {
+				"result": "ok"
+			}
 		},
 		{
 			"method": "POST",
@@ -27,7 +31,10 @@
 			"bodyPatterns": {
 				"matches": "['\"]name['\"]\\s*:\\s*['\"]mario['\"]"
 			},
-			"responseFile": "./marioRegistration.json"
+			"responseJson": {
+				"result": "ok",
+				"user": "John Doe"
+			}
 		}
 	]
 }

@@ -9,7 +9,9 @@ const config: MockConfig = {
 			path: {
 				base: '/simple/api'
 			},
-			responseFile: 'simpleGet'
+			responseJson: {
+				result: 'simpleGet'
+			}
 		},
 		{
 			method: 'GET',
@@ -19,7 +21,9 @@ const config: MockConfig = {
 					gianni: "mar io"
 				}
 			},
-			responseFile: 'simpleQuery'
+			responseJson: {
+				result: 'simpleQuery'
+			}
 		},
 		{
 			method: 'POST',
@@ -29,7 +33,9 @@ const config: MockConfig = {
 			bodyPatterns: {
 				matches: '[\'"]mar[\'"]\s*:\s*[\'"]io[\'"]'
 			},
-			responseFile: 'simplePost'
+			responseJson: {
+				result: 'simplePost'
+			}
 		}
 	]
 };
@@ -44,7 +50,7 @@ describe('FetchStub Config tests', () => {
 		expect(response).not.toBeNull();
 
 		const body = await response.json();
-		expect(body).toEqual({ file: 'simpleGet' });
+		expect(body).toEqual({ result: 'simpleGet' });
 	});
 
 	it('should match simple get request with querystring', async () => {
@@ -54,7 +60,7 @@ describe('FetchStub Config tests', () => {
 		expect(response).not.toBeNull();
 
 		const body = await response.json();
-		expect(body).toEqual({ file: 'simpleQuery' });
+		expect(body).toEqual({ result: 'simpleQuery' });
 	});
 
 	it('should match simple post request', async () => {
@@ -68,7 +74,7 @@ describe('FetchStub Config tests', () => {
 		expect(response).not.toBeNull();
 
 		const body = await response.json();
-		expect(body).toEqual({ file: 'simplePost' });
+		expect(body).toEqual({ result: 'simplePost' });
 	});
 
 	it('should not match simple post request', async () => {

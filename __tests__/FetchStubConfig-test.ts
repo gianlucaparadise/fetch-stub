@@ -1,4 +1,4 @@
-import FetchStub, { MockConfig } from "../src";
+import FetchStub, { MockConfig, MissingDescriptorError } from "../src";
 
 import 'whatwg-fetch'
 
@@ -88,7 +88,7 @@ describe('FetchStub Config tests', () => {
 			// this will throw a 404
 			const response = await fetch(inputRequest);
 		} catch (error) {
-			expect(error).not.toBeNull();
+			expect(error).toBeInstanceOf(MissingDescriptorError);
 		}
 	});
 });

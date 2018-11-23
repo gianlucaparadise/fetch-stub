@@ -53,7 +53,6 @@ function wrapFetch() {
 				return fetch(...args);
 			}
 
-			//return new Promise(async (resolve, reject) => {
 			const requestMatcher: RequestMatcher = globalAny.fetch.requestMatcher;
 			let response = await requestMatcher.getResponse(args);
 

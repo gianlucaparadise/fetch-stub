@@ -7,10 +7,13 @@ const config: MockConfig = {
 		{
 			method: 'GET',
 			path: {
-				base: '/simple/api'
+				base: '/v2/beers',
+				queries: {
+					beer_name: 'punk_ipa'
+				}
 			},
 			responseJson: {
-				result: 'simpleGet'
+				description: 'good beer'
 			}
 		}
 	]
@@ -47,22 +50,23 @@ describe('FetchStub Config tests', () => {
 	it('should load and unload FetchStub', async () => {
 		FetchStub.load(config);
 
-		const inputRequest = new Request('http://example.com/simple/api');
+		const inputRequest = new Request('https://api.punkapi.com/v2/beers?beer_name=punk_ipa');
+		const stubResponseBody = { description: 'good beer' };
 
-		// Here fetch is in stub, I expect the mocked answer
+		// Here fetch is in stub, I expect the mocked response
 		const responseStub = await fetch(inputRequest);
 		expect(responseStub).not.toBeNull();
 
 		const bodyStub = await responseStub.json();
-		expect(bodyStub).toEqual({ result: 'simpleGet' });
+		expect(bodyStub).toEqual(stubResponseBody);
 
 		FetchStub.unload();
 
-		try {
-			// this will throw a 404
-			const responseWeb = await fetch(inputRequest);
-		} catch (error) {
-			expect(error).not.toBeNull();
-		}
+		// Here I'm not using stub, I expect the real response from punkApi
+		const responseWeb = await fetch(inputRequest);
+		expect(responseWeb).not.toBeNull();
+
+		const bodyWeb = await responseWeb.json();
+		expect(bodyWeb).not.toEqual(stubResponseBody);
 	});
 });

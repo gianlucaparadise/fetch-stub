@@ -50,7 +50,7 @@ function wrapFetch() {
 		return function (...args: any[]) {
 			if (globalAny.fetch.isStub && !globalAny.fetch.isStubEnabled) {
 				// when stub is disabled, I use the real fetch
-				return fetch(args);
+				return fetch(...args);
 			}
 
 			return new Promise(async (resolve, reject) => {

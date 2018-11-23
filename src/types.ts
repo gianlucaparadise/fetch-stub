@@ -84,3 +84,11 @@ export class FetchNotInstalledError extends Error { }
 //  * This exception is thrown when you try to load FetchStub twice
 //  */
 // export class ReloadError extends Error { }
+
+/**
+ * This exception is thrown when FetchStub has no descriptor that matches with
+ * the current request and `forward` is set to `false`.
+ * This error extends `TypeError` because `whatwg-fetch` throws a `TypeError`
+ * when a Network request fails
+ */
+export class MissingDescriptorError extends TypeError { }

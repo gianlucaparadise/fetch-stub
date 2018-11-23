@@ -85,7 +85,7 @@
 		},
 		"forward": {
 			"type": "boolean",
-			"description": "True when you want to send the request if no descriptor matches. Default: false. (currently not working)"
+			"description": "True when you want to send the request if no descriptor matches. Default: false."
 		}
 	},
 	"required": [

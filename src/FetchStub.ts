@@ -1,4 +1,4 @@
-import { MockConfig, FetchNotInstalledError, NoConfigError } from './types'
+import { MockConfig, FetchNotInstalledError, NoConfigError, MissingDescriptorError } from './types'
 import { logError } from './Helpers'
 import { RequestMatcher } from './RequestMatcher'
 
@@ -47,27 +47,33 @@ export class FetchStub {
 
 function wrapFetch() {
 	globalAny.fetch = (function (fetch) {
-		return function (...args: any[]) {
+		return async function (...args: any[]) {
 			if (globalAny.fetch.isStub && !globalAny.fetch.isStubEnabled) {
 				// when stub is disabled, I use the real fetch
 				return fetch(...args);
 			}
 
-			return new Promise(async (resolve, reject) => {
-				let response = await globalAny.fetch.requestMatcher.getResponse(args);
+			//return new Promise(async (resolve, reject) => {
+			const requestMatcher: RequestMatcher = globalAny.fetch.requestMatcher;
+			let response = await requestMatcher.getResponse(args);
 
-				if (response) {
-					resolve(response);
-				}
-				else {
-					// if forward:
-					// 		todo: check if this is necessary before forwarding
-					// 		input.bodyUsed = false; 
-					//   	return fetch(...args);
-					// else:
-					reject(new Error("404 - Not Found"));
-				}
-			});
+			if (response) {
+				return Promise.resolve(response);
+			}
+
+			if (!requestMatcher.config.forward) {
+				return Promise.reject(new MissingDescriptorError("404 - Not Found"));
+			}
+
+			//#region Forwarding request
+			try {
+				let responseWeb = await fetch(...args);
+				return Promise.resolve(responseWeb);
+			}
+			catch (e) {
+				return Promise.reject(e);
+			}
+			//#endregion
 		};
 	})(globalAny.fetch);
 

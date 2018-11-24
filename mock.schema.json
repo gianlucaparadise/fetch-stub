@@ -86,6 +86,10 @@
 		"forward": {
 			"type": "boolean",
 			"description": "True when you want to send the request if no descriptor matches. Default: false."
+		},
+		"mockFolder": {
+			"type": "string",
+			"description": "Base path of all the response files (not working yet)"
 		}
 	},
 	"required": [

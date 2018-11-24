@@ -61,6 +61,10 @@ export type MockConfig = {
 	 */
 	forward?: boolean,
 	/**
+	 * Base Path of the response files paths
+	 */
+	mockFolder?: string,
+	/**
 	 * List of request match rules
 	 */
 	requests: RequestDescriptor[]
@@ -92,3 +96,10 @@ export class FetchNotInstalledError extends Error { }
  * when a Network request fails
  */
 export class MissingDescriptorError extends TypeError { }
+
+/**
+ * This exception is thrown when you have a descriptor that requires a response
+ * file, but you didn't set `mockFolder`. The `mockFolder` property is the base path
+ * of all the response files.
+ */
+export class MissingMockFolderError extends TypeError { }

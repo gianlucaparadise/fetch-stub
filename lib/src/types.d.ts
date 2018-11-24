@@ -19,6 +19,7 @@ export declare type RequestDescriptor = {
 };
 export declare type MockConfig = {
     forward?: boolean;
+    mockFolder?: string;
     requests: RequestDescriptor[];
 };
 export declare class NoConfigError extends Error {

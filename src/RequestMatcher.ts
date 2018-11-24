@@ -39,9 +39,17 @@ export class RequestMatcher {
 		}
 		if (!d) return null; // no descriptor matches
 
-		//let responsePath = d.responseFile;
-		//let responseBody = retrieveResponseFile(responsePath);
-		let responseBody = d.responseJson;
+		let responseBody: object;
+		if (d.responseFile) {
+			if (!this.config.mockFolder) {
+				throw new MissingMockFolderError("Mock folder not defined");
+			}
+			let responsePath = d.responseFile;
+			responseBody = await retrieveResponseFile(this.config.mockFolder, responsePath);
+		}
+		else {
+			responseBody = d.responseJson;
+		}
 
 		let stringBody = JSON.stringify(responseBody);
 		let response = new Response(stringBody);
@@ -166,9 +174,10 @@ export async function matchBody(input: any, matchBody?: BodyMatcher): Promise<bo
  * 
  * @param responsePath 
  */
-export function retrieveResponseFile(responsePath: string): any {
+export async function retrieveResponseFile(mockFolder: string, responsePath: string): Promise<object> {
 	// todo: understand how to read file across all javascript environments (NodeJs, React Native, Browser)
-	return {
+	return Promise.resolve({
 		file: responsePath
+	});
 	}
 }

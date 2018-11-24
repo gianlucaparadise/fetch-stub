@@ -10,4 +10,4 @@ export declare function matches(input: Request, match: RequestDescriptor): Promi
 export declare function matchUrl(inputUrlString: string, matchPath?: PathMatcher): boolean;
 export declare function matchQueries(inputUrl: UrlWithParsedQuery, matchQueries?: QueryMatcher): boolean;
 export declare function matchBody(input: any, matchBody?: BodyMatcher): Promise<boolean>;
-export declare function retrieveResponseFile(responsePath: string): any;
+export declare function retrieveResponseFile(mockFolder: string, responsePath: string): Promise<object>;

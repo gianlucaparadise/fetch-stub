@@ -1,6 +1,13 @@
-import { MockConfig, BodyMatcher, QueryMatcher, PathMatcher, RequestDescriptor } from './types'
+import { MockConfig, BodyMatcher, QueryMatcher, PathMatcher, RequestDescriptor, MissingMockFolderError } from './types'
 import { logError } from './Helpers';
 import { UrlWithParsedQuery, parse as urlParse } from 'url';
+
+//#region Node-only code
+import * as fs from 'fs';
+import * as path from 'path';
+import * as util from 'util';
+const readFileAsync = util.promisify(fs.readFile);
+//#endregion
 
 export class RequestMatcher {
 	config: MockConfig;
@@ -176,8 +183,15 @@ export async function matchBody(input: any, matchBody?: BodyMatcher): Promise<bo
  */
 export async function retrieveResponseFile(mockFolder: string, responsePath: string): Promise<object> {
 	// todo: understand how to read file across all javascript environments (NodeJs, React Native, Browser)
-	return Promise.resolve({
-		file: responsePath
-	});
+	const filePath = path.join(mockFolder, responsePath);
+	console.log(filePath);
+	try {
+		const data = await readFileAsync(filePath, { encoding: 'utf-8' });
+		let result = JSON.parse(data) as object;
+		return Promise.resolve(result);
+	}
+	catch (err) {
+		logError(err);
+		return Promise.reject(err);
 	}
 }

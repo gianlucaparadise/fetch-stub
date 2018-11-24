@@ -89,7 +89,7 @@
 		},
 		"mockFolder": {
 			"type": "string",
-			"description": "Base path of all the response files (not working yet)"
+			"description": "Base path of all the response files"
 		}
 	},
 	"required": [

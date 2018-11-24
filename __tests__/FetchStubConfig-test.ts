@@ -1,8 +1,10 @@
 import FetchStub, { MockConfig, MissingDescriptorError } from "../src";
+import * as expectedFileResponse from './mock/simpleFileResponse.json';
 
 import 'whatwg-fetch'
 
 const config: MockConfig = {
+	mockFolder: __dirname,
 	requests: [
 		{
 			method: 'GET',
@@ -36,6 +38,14 @@ const config: MockConfig = {
 			responseJson: {
 				result: 'simplePost'
 			}
+		},
+		{
+			method: 'GET',
+			path: {
+				base: '/simple/api/file'
+			},
+			responseJson: {},
+			responseFile: "mock/simpleFileResponse.json"
 		}
 	]
 };
@@ -90,5 +100,17 @@ describe('FetchStub Config tests', () => {
 		} catch (error) {
 			expect(error).toBeInstanceOf(MissingDescriptorError);
 		}
+	});
+});
+
+describe('Response File check', () => {
+	it('should match file', async () => {
+		const inputRequest = new Request('http://example.com/simple/api/file');
+		const response = await fetch(inputRequest);
+
+		expect(response).not.toBeNull();
+
+		const body = await response.json();
+		expect(body).toEqual(expectedFileResponse);
 	});
 });

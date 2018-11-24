@@ -6,6 +6,8 @@
 		"outDir": "lib",
 		"strict": true,
 		"removeComments": true,
+		"resolveJsonModule": true,
+		"allowSyntheticDefaultImports": true,
 		"lib": [
 			"es6",
 			"dom"

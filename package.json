@@ -16,7 +16,8 @@
   "scripts": {
     "build": "rm -r lib  && tsc",
     "pretest": "npm run build",
-    "test": "jest"
+    "test": "jest",
+    "test:file": "npm run test -- file"
   },
   "keywords": [
     "fetch mock",

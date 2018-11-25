@@ -1,4 +1,4 @@
-import { MockConfig, BodyMatcher, QueryMatcher, PathMatcher, RequestDescriptor, MissingMockFolderError, MissingFileRetrieverError } from './types'
+import { MockConfig, BodyMatcher, QueryMatcher, PathMatcher, RequestDescriptor, MockConfigError } from './types'
 import { logError } from './Helpers';
 import { UrlWithParsedQuery, parse as urlParse } from 'url';
 
@@ -42,10 +42,10 @@ export class RequestMatcher {
 		let responseBody: object;
 		if (d.responseFile) {
 			if (!this.config.mockFolder) {
-				throw new MissingMockFolderError("Mock folder not defined");
+				throw new MockConfigError("Mock folder not defined");
 			}
 			if (!this.config.responseFileRetriever) {
-				throw new MissingFileRetrieverError("FileRetriever function not defined");
+				throw new MockConfigError("FileRetriever function not defined");
 			}
 
 			let responsePath = d.responseFile;

@@ -24,13 +24,9 @@ export declare type MockConfig = {
     requests: RequestDescriptor[];
 };
 export declare type ResponseFileRetriever = (mockFolder: string, responsePath: string) => Promise<object>;
-export declare class NoConfigError extends Error {
+export declare class MockConfigError extends Error {
 }
 export declare class FetchNotInstalledError extends Error {
 }
 export declare class MissingDescriptorError extends TypeError {
-}
-export declare class MissingMockFolderError extends TypeError {
-}
-export declare class MissingFileRetrieverError extends TypeError {
 }

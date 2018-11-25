@@ -1,4 +1,4 @@
-import { MockConfig, FetchNotInstalledError, NoConfigError, MissingDescriptorError } from './types'
+import { MockConfig, FetchNotInstalledError, MockConfigError, MissingDescriptorError } from './types'
 import { logError } from './Helpers'
 import { RequestMatcher } from './RequestMatcher'
 
@@ -17,7 +17,7 @@ export class FetchStub {
 
 		if (!config) {
 			logError("Config file not found.");
-			throw new NoConfigError("Config file not found.");
+			throw new MockConfigError("Config file not found.");
 		}
 
 		if (!globalAny.fetch.isStub) {

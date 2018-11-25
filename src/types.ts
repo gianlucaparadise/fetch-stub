@@ -61,11 +61,16 @@ export type MockConfig = {
 	 */
 	forward?: boolean,
 	/**
-	 * Base Path of the response files paths
+	 * Base Path of the response files paths.
+	 * An exception is thrown when you have a descriptor that requires a response
+ 	 * file, but you didn't set `mockFolder`.
 	 */
 	mockFolder?: string,
 	/**
-	 * Function that reads the response file
+	 * Function that reads the response file.
+	 * You can use `nodeResponseFileRetriever` in a node environment.
+	 * An exception is thrown when you have a descriptor that requires a response
+	 * file, but you didn't set `responseFileRetriever`.
 	 */
 	responseFileRetriever?: ResponseFileRetriever,
 	/**
@@ -80,12 +85,12 @@ export type MockConfig = {
  */
 export type ResponseFileRetriever = (mockFolder: string, responsePath: string) => Promise<object>;
 
-// EXCEPTIONS
+//#region EXCEPTIONS
 
 /**
- * This exception is thrown when you try to load FetchStub without a config file
+ * This exception is thrown when you have problems in your MockConfig file
  */
-export class NoConfigError extends Error { }
+export class MockConfigError extends Error { }
 
 /**
  * This exception is thrown when you try to load FetchStub,
@@ -93,11 +98,6 @@ export class NoConfigError extends Error { }
  * Use: require('whatwg-fetch')
  */
 export class FetchNotInstalledError extends Error { }
-
-// /**
-//  * This exception is thrown when you try to load FetchStub twice
-//  */
-// export class ReloadError extends Error { }
 
 /**
  * This exception is thrown when FetchStub has no descriptor that matches with
@@ -107,11 +107,4 @@ export class FetchNotInstalledError extends Error { }
  */
 export class MissingDescriptorError extends TypeError { }
 
-/**
- * This exception is thrown when you have a descriptor that requires a response
- * file, but you didn't set `mockFolder`. The `mockFolder` property is the base path
- * of all the response files.
- */
-export class MissingMockFolderError extends TypeError { }
-
-export class MissingFileRetrieverError extends TypeError { }
+//#endregion

@@ -65,10 +65,20 @@ export type MockConfig = {
 	 */
 	mockFolder?: string,
 	/**
+	 * Function that reads the response file
+	 */
+	responseFileRetriever?: ResponseFileRetriever,
+	/**
 	 * List of request match rules
 	 */
 	requests: RequestDescriptor[]
 }
+
+/**
+ * This function gets called when FetchStub has matched a descriptor with response file and needs
+ * to read it. This is strictly related to your js environment.
+ */
+export type ResponseFileRetriever = (mockFolder: string, responsePath: string) => Promise<object>;
 
 // EXCEPTIONS
 
@@ -103,3 +113,5 @@ export class MissingDescriptorError extends TypeError { }
  * of all the response files.
  */
 export class MissingMockFolderError extends TypeError { }
+
+export class MissingFileRetrieverError extends TypeError { }

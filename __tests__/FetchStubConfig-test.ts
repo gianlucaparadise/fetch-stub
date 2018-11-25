@@ -2,9 +2,11 @@ import FetchStub, { MockConfig, MissingDescriptorError } from "../src";
 import * as expectedFileResponse from './mock/simpleFileResponse.json';
 
 import 'whatwg-fetch'
+import { nodeResponseFileRetriever } from "../src/readers/NodeFileReader";
 
 const config: MockConfig = {
 	mockFolder: __dirname,
+	responseFileRetriever: nodeResponseFileRetriever,
 	requests: [
 		{
 			method: 'GET',

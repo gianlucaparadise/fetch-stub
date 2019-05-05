@@ -1,9 +1,10 @@
 /// <reference types="node" />
-import { MockConfig, BodyMatcher, QueryMatcher, PathMatcher, RequestDescriptor } from './types';
+import { MockConfig, BodyMatcher, QueryMatcher, PathMatcher, RequestDescriptor, ExtraConfig } from './types';
 import { UrlWithParsedQuery } from 'url';
 export declare class RequestMatcher {
     config: MockConfig;
-    constructor(config: MockConfig);
+    extraConfigs: ExtraConfig;
+    constructor(config: MockConfig, extraConfigs: ExtraConfig);
     getResponse(args: any[]): Promise<Response | null>;
 }
 export declare function matches(input: Request, match: RequestDescriptor): Promise<boolean>;

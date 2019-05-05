@@ -67,13 +67,6 @@ export type MockConfig = {
 	 */
 	mockFolder?: string,
 	/**
-	 * Function that reads the response file.
-	 * You can use `nodeResponseFileRetriever` in a node environment.
-	 * An exception is thrown when you have a descriptor that requires a response
-	 * file, but you didn't set `responseFileRetriever`.
-	 */
-	responseFileRetriever?: ResponseFileRetriever,
-	/**
 	 * List of request match rules
 	 */
 	requests: RequestDescriptor[]
@@ -84,6 +77,17 @@ export type MockConfig = {
  * to read it. This is strictly related to your js environment.
  */
 export type ResponseFileRetriever = (mockFolder: string, responsePath: string) => Promise<object>;
+
+export type ExtraConfig = {
+	/**
+	 * Function that reads the response file.
+	 * If not specified, `defaultResponseFileRetriever` is used.
+	 * You can use `nodeResponseFileRetriever` in a node environment.
+	 * An exception is thrown when you have a descriptor that requires a response
+	 * file, but you didn't set `responseFileRetriever`.
+	 */
+	responseFileRetriever?: ResponseFileRetriever
+}
 
 //#region EXCEPTIONS
 

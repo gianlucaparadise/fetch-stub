@@ -1,12 +1,14 @@
-import { MockConfig, BodyMatcher, QueryMatcher, PathMatcher, RequestDescriptor, MockConfigError } from './types'
+import { MockConfig, BodyMatcher, QueryMatcher, PathMatcher, RequestDescriptor, MockConfigError, ExtraConfig } from './types'
 import { logError } from './Helpers';
 import { UrlWithParsedQuery, parse as urlParse } from 'url';
 
 export class RequestMatcher {
 	config: MockConfig;
+	extraConfigs: ExtraConfig;
 
-	constructor(config: MockConfig) {
+	constructor(config: MockConfig, extraConfigs: ExtraConfig) {
 		this.config = config;
+		this.extraConfigs = extraConfigs;
 	}
 
 	/**
@@ -44,12 +46,12 @@ export class RequestMatcher {
 			if (!this.config.mockFolder) {
 				throw new MockConfigError("Mock folder not defined");
 			}
-			if (!this.config.responseFileRetriever) {
+			if (!this.extraConfigs.responseFileRetriever) {
 				throw new MockConfigError("FileRetriever function not defined");
 			}
 
 			let responsePath = d.responseFile;
-			const retrieveResponseFile = this.config.responseFileRetriever;
+			const retrieveResponseFile = this.extraConfigs.responseFileRetriever;
 			responseBody = await retrieveResponseFile(this.config.mockFolder, responsePath);
 		}
 		else {

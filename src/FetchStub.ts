@@ -1,6 +1,7 @@
-import { MockConfig, FetchNotInstalledError, MockConfigError, MissingDescriptorError } from './types'
+import { MockConfig, FetchNotInstalledError, MockConfigError, MissingDescriptorError, ExtraConfig } from './types'
 import { logError } from './Helpers'
 import { RequestMatcher } from './RequestMatcher'
+import { defaultResponseFileRetriever } from './readers/DefaultFileReader';
 
 let globalAny = (global as any)
 
@@ -9,7 +10,7 @@ export class FetchStub {
 	/**
 	 * Start mock server with given configuration
 	 */
-	static load(config: MockConfig) {
+	static load(config: MockConfig, extraConfigs?: ExtraConfig) {
 		if (!globalAny.fetch) {
 			logError('Fetch not installed in global.');
 			throw new FetchNotInstalledError('Fetch not installed in global.');
@@ -25,7 +26,11 @@ export class FetchStub {
 			wrapFetch();
 		}
 
-		let requestMatcher = new RequestMatcher(config);
+		let myExtraConfigs = Object.assign({
+			responseFileRetriever: defaultResponseFileRetriever
+		} as ExtraConfig, extraConfigs);
+
+		let requestMatcher = new RequestMatcher(config, myExtraConfigs);
 
 		globalAny.fetch.requestMatcher = requestMatcher;
 		globalAny.fetch.isStubEnabled = true;

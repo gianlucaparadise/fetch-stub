@@ -3,7 +3,7 @@ import { logError } from './Helpers'
 import { RequestMatcher } from './RequestMatcher'
 import { defaultResponseFileRetriever } from './readers/DefaultFileReader';
 
-let globalAny = (global as any)
+const globalAny = (global as any)
 
 export class FetchStub {
 
@@ -26,11 +26,11 @@ export class FetchStub {
 			wrapFetch();
 		}
 
-		let myExtraConfigs = Object.assign({
+		const myExtraConfigs = Object.assign({
 			responseFileRetriever: defaultResponseFileRetriever
 		} as ExtraConfig, extraConfigs);
 
-		let requestMatcher = new RequestMatcher(config, myExtraConfigs);
+		const requestMatcher = new RequestMatcher(config, myExtraConfigs);
 
 		globalAny.fetch.requestMatcher = requestMatcher;
 		globalAny.fetch.isStubEnabled = true;
@@ -71,7 +71,7 @@ function wrapFetch() {
 
 			//#region Forwarding request
 			try {
-				let responseWeb = await fetch(...args);
+				const responseWeb = await fetch(...args);
 				return Promise.resolve(responseWeb);
 			}
 			catch (e) {

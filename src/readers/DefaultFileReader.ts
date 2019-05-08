@@ -3,12 +3,12 @@ import { ResponseFileRetriever } from '../types';
 
 import * as path from 'path';
 
-export let defaultResponseFileRetriever: ResponseFileRetriever = async function (mockFolder: string, responsePath: string): Promise<object> {
+export const defaultResponseFileRetriever: ResponseFileRetriever = async function (mockFolder: string, responsePath: string): Promise<object> {
 	// todo: understand how to read file across all javascript environments (NodeJs, React Native, Browser)
 	const filePath = path.join(mockFolder, responsePath);
 
 	try {
-		let result = require(`${filePath}`);
+		const result = require(`${filePath}`);
 		return Promise.resolve(result);
 	}
 	catch (err) {

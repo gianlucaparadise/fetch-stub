@@ -5,39 +5,39 @@ import { BodyMatcher, PathMatcher, QueryMatcher } from '../src'
 
 describe('QueryMatcher', () => {
 	it('should match simple query strings', () => {
-		let urlString = "http://test.com/path?query=string&pippo=pluto";
-		let inputUrl = urlParse(urlString, true);
+		const urlString = "http://test.com/path?query=string&pippo=pluto";
+		const inputUrl = urlParse(urlString, true);
 
-		let matchQuery: QueryMatcher = {};
+		const matchQuery: QueryMatcher = {};
 		matchQuery["pippo"] = "pluto";
 
-		let result = matchQueries(inputUrl, matchQuery);
+		const result = matchQueries(inputUrl, matchQuery);
 
 		expect(result).toEqual(true);
 	});
 
 	it('should not match query strings', () => {
-		let urlString = "http://test.com/path?query=string&pippo=pluto";
-		let inputUrl = urlParse(urlString, true);
+		const urlString = "http://test.com/path?query=string&pippo=pluto";
+		const inputUrl = urlParse(urlString, true);
 
-		let matchQuery: QueryMatcher = {};
+		const matchQuery: QueryMatcher = {};
 		matchQuery["pippo"] = "pluto";
 		matchQuery["mar"] = "io";
 
-		let result = matchQueries(inputUrl, matchQuery);
+		const result = matchQueries(inputUrl, matchQuery);
 
 		expect(result).toEqual(false);
 	});
 
 	it('should match query string with duplicate key', () => {
-		let urlString = "http://test.com/path?pippo=plu+to&query=string&query=param";
-		let inputUrl = urlParse(urlString, true);
+		const urlString = "http://test.com/path?pippo=plu+to&query=string&query=param";
+		const inputUrl = urlParse(urlString, true);
 
-		let matchQuery: QueryMatcher = {};
+		const matchQuery: QueryMatcher = {};
 		matchQuery["query"] = "param";
 		matchQuery["pippo"] = "plu to";
 
-		let result = matchQueries(inputUrl, matchQuery);
+		const result = matchQueries(inputUrl, matchQuery);
 
 		expect(result).toEqual(true);
 	});
@@ -45,67 +45,67 @@ describe('QueryMatcher', () => {
 
 describe('UrlMatcher', () => {
 	it('should match simple url', () => {
-		let inputUrl = "http://test.com/simple/path"
+		const inputUrl = "http://test.com/simple/path"
 
-		let matchPath: PathMatcher = {
+		const matchPath: PathMatcher = {
 			base: '/simple/path'
 		};
 
-		let result = matchUrl(inputUrl, matchPath);
+		const result = matchUrl(inputUrl, matchPath);
 
 		expect(result).toEqual(true);
 	});
 
 	it('should not match url', () => {
-		let inputUrl = "http://test.com/simple/path/longer"
+		const inputUrl = "http://test.com/simple/path/longer"
 
-		let matchPath: PathMatcher = {
+		const matchPath: PathMatcher = {
 			base: '/simple/path'
 		};
 
-		let result = matchUrl(inputUrl, matchPath);
+		const result = matchUrl(inputUrl, matchPath);
 
 		expect(result).toEqual(false);
 	});
 
 	it('should match url ignoring query string', () => {
-		let inputUrl = "http://test.com/simple/path?mario=pluto"
+		const inputUrl = "http://test.com/simple/path?mario=pluto"
 
-		let matchPath: PathMatcher = {
+		const matchPath: PathMatcher = {
 			base: '/simple/path'
 		};
 
-		let result = matchUrl(inputUrl, matchPath);
+		const result = matchUrl(inputUrl, matchPath);
 
 		expect(result).toEqual(true);
 	});
 
 	it('should not match url missing query string', () => {
-		let inputUrl = "http://test.com/simple/path"
+		const inputUrl = "http://test.com/simple/path"
 
-		let matchPath: PathMatcher = {
+		const matchPath: PathMatcher = {
 			base: '/simple/path',
 			queries: {
 				mario: "pluto"
 			}
 		};
 
-		let result = matchUrl(inputUrl, matchPath);
+		const result = matchUrl(inputUrl, matchPath);
 
 		expect(result).toEqual(false);
 	});
 
 	it('should match url and query string', () => {
-		let inputUrl = "http://test.com/simple/path?mario=pluto"
+		const inputUrl = "http://test.com/simple/path?mario=pluto"
 
-		let matchPath: PathMatcher = {
+		const matchPath: PathMatcher = {
 			base: '/simple/path',
 			queries: {
 				mario: "pluto"
 			}
 		};
 
-		let result = matchUrl(inputUrl, matchPath);
+		const result = matchUrl(inputUrl, matchPath);
 
 		expect(result).toEqual(true);
 	});

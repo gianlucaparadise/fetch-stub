@@ -1,19 +1,31 @@
 # FetchStub
 
-### Config File Instructions
+This library wraps the fetch function and responds with a local json.
 
-##### Apply JSON Schema
-You can write your configurations in a file named `*.mock.json`. For applying the JSON Schema validator in VS Code, add this configuration in your `settings.json` file:
-```js
-"json.schemas": [
-  {
-    "fileMatch": [
-      "/*.mock.json"
-    ],
-    "url": "https://raw.githubusercontent.com/gianlucaparadise/fetch-stub/master/mock.schema.json"
-  }
-]
+## Installation
+
+```shell
+yarn add fetch-stub
 ```
+or
+```shell
+npm i fetch-stub --save
+```
+
+## Basic Usage
+
+To initialize and load FetchStub:
+```js
+const FetchStub = require('fetch-stub');
+const mockConfig = require('../../config/mocks/mock.config.json'); // path to mock config file
+FetchStub.load(mockConfig);
+```
+To unload FetchStub:
+```js
+FetchStub.unload();
+```
+
+### Config File Instructions
 
 #### Config Example
 Here you can see an example:
@@ -58,4 +70,17 @@ Here you can see an example:
     }
   ]
 }
+```
+
+##### Apply JSON Schema
+You can write your configurations in a file named `*.mock.json`. For applying the JSON Schema validator in VS Code, add this configuration in your `settings.json` file:
+```js
+"json.schemas": [
+  {
+    "fileMatch": [
+      "/*.mock.json"
+    ],
+    "url": "https://raw.githubusercontent.com/gianlucaparadise/fetch-stub/master/mock.schema.json"
+  }
+]
 ```

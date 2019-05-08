@@ -30,7 +30,7 @@ export class RequestMatcher {
 		}
 
 		// Searching for a descriptor that matches
-		let descriptors = this.config.requests;
+		const descriptors = this.config.requests;
 
 		let d: RequestDescriptor | null = null;
 		for (let i = 0; i < descriptors.length; i++) {
@@ -50,7 +50,7 @@ export class RequestMatcher {
 				throw new MockConfigError("FileRetriever function not defined");
 			}
 
-			let responsePath = d.responseFile;
+			const responsePath = d.responseFile;
 			const retrieveResponseFile = this.extraConfigs.responseFileRetriever;
 			responseBody = await retrieveResponseFile(this.config.mockFolder, responsePath);
 		}
@@ -79,12 +79,12 @@ export async function matches(input: Request, match: RequestDescriptor): Promise
 		return false;
 	}
 
-	let matchesUrl = matchUrl(input.url, match.path);
+	const matchesUrl = matchUrl(input.url, match.path);
 	if (!matchesUrl) {
 		return false;
 	}
 
-	let matchesBody = await matchBody(input, match.bodyPatterns);
+	const matchesBody = await matchBody(input, match.bodyPatterns);
 	if (!matchesBody) {
 		return false;
 	}
@@ -138,7 +138,7 @@ export function matchQueries(inputUrl: UrlWithParsedQuery, matchQueries?: QueryM
 
 	//const inputParams = querystring.parse(inputUrl.query);
 	const inputParams = inputUrl.query;
-	for (let key in matchQueries) {
+	for (const key in matchQueries) {
 		if (matchQueries.hasOwnProperty(key)) {
 			const value = matchQueries[key];
 
@@ -161,7 +161,7 @@ export async function matchBody(input: any, matchBody?: BodyMatcher): Promise<bo
 		return true; // Nothing to match, so it matches
 	}
 
-	let inputBody = await input.text();
+	const inputBody = await input.text();
 	if (!inputBody) {
 		return false; // I have a BodyMatcher but nothing to match: it doesn't match
 	}

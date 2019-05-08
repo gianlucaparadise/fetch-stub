@@ -1,6 +1,6 @@
 {
   "name": "fetch-stub",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "This library wraps the fetch function and responds with a local json",
   "author": {
     "name": "gianlucaparadise",
@@ -8,15 +8,17 @@
     "url": "https://github.com/gianlucaparadise"
   },
   "license": "Apache-2.0",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/gianlucaparadise/fetch-stub"
   },
   "scripts": {
-    "build": "rm -r lib  && tsc",
+    "build": "rm -rf lib  && tsc",
+    "prepare" : "npm run build",
     "pretest": "npm run build",
-    "test": "jest",
+    "test": "jest --config jestconfig.json",
     "test:file": "npm run test -- file"
   },
   "keywords": [
@@ -27,10 +29,15 @@
     "local server"
   ],
   "devDependencies": {
-    "@types/jest": "^23.3.9",
+    "@types/jest": "^24.0.12",
     "@types/node": "^10.12.9",
-    "jest": "^20.0.4",
+    "jest": "^24.8.0",
+    "ts-jest": "^24.0.2",
+    "typescript": "^3.4.5",
     "whatwg-fetch": "^2.0.4"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "files": [
+    "lib/**/*"
+  ]
 }

@@ -1,6 +1,6 @@
 {
   "name": "fetch-stub",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "This library wraps the fetch function and responds with a local json",
   "author": {
     "name": "gianlucaparadise",
@@ -16,7 +16,7 @@
   },
   "scripts": {
     "build": "rm -rf lib  && tsc",
-    "prepare" : "npm run build",
+    "prepare": "npm run build",
     "pretest": "npm run build",
     "test": "jest --config jestconfig.json",
     "test:file": "npm run test -- file"
@@ -36,7 +36,9 @@
     "typescript": "^3.4.5",
     "whatwg-fetch": "^2.0.4"
   },
-  "dependencies": {},
+  "dependencies": {
+    "path": "^0.12.7"
+  },
   "files": [
     "lib/**/*"
   ]

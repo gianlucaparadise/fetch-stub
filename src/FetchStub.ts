@@ -1,4 +1,4 @@
-import { MockConfig, FetchNotInstalledError, MockConfigError, MissingDescriptorError, ExtraConfig } from './types'
+import { MockConfig, FetchNotInstalledError, MockConfigError, MissingDescriptorError, ExtraConfig, IRequest } from './types'
 import { logError } from './Helpers'
 import { RequestMatcher } from './RequestMatcher'
 import { defaultResponseFileRetriever } from './readers/DefaultFileReader';
@@ -59,9 +59,12 @@ function wrapFetch() {
 			}
 
 			const requestMatcher: RequestMatcher = globalAny.fetch.requestMatcher;
-			let response = await requestMatcher.getResponse(args);
 
-			if (response) {
+			const request = wrapRequest(args);
+			const stringBody = await requestMatcher.getResponse(request);
+
+			if (stringBody) {
+				const response = new Response(stringBody);
 				return Promise.resolve(response);
 			}
 
@@ -82,4 +85,20 @@ function wrapFetch() {
 	})(globalAny.fetch);
 
 	globalAny.fetch.isStub = true;
+}
+
+/**
+ * This function wraps fetch args to generic IRequest instance
+ * @param args Args passed to fetch
+ */
+function wrapRequest(args: any[]): IRequest | undefined {
+	if (args[0] instanceof Request) {
+		return args[0];
+	}
+	
+	if (typeof args[0] === "string") {
+		return new Request(args[0], args[1]);
+	}
+
+	return undefined;
 }

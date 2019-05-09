@@ -2,6 +2,15 @@
 
 This library wraps the fetch function and responds with a local json.
 
+## Purpose
+
+This library is useful in the following conditions:
+
+* Your backend is unavailable
+* Your backend is not yet completed, but you have an interface agreement
+* You don't have Internet access
+* You need to test specific responses that are difficult to replicate with you server
+
 ## Installation
 
 ```shell

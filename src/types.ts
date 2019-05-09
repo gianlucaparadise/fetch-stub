@@ -89,6 +89,24 @@ export type ExtraConfig = {
 	responseFileRetriever?: ResponseFileRetriever
 }
 
+/**
+ * This interface abstracts the library-dependent logics to keep code reusable
+ */
+export interface IRequest {
+	/**
+	 * HTTP method. Example: 'GET'
+	 */
+	method: string;
+	/**
+	 * Request url
+	 */
+	url: string;
+	/**
+	 * Request body as string
+	 */
+	text(): Promise<string>;
+}
+
 //#region EXCEPTIONS
 
 /**

@@ -1,7 +1,10 @@
-import { MockConfig, BodyMatcher, QueryMatcher, PathMatcher, RequestDescriptor, MockConfigError, ExtraConfig } from './types'
+import { MockConfig, BodyMatcher, QueryMatcher, PathMatcher, RequestDescriptor, MockConfigError, ExtraConfig, IRequest } from './types'
 import { logError } from './Helpers';
 import { UrlWithParsedQuery, parse as urlParse } from 'url';
 
+/**
+ * Helper class to check if input request matches with any MockConfig rule
+ */
 export class RequestMatcher {
 	config: MockConfig;
 	extraConfigs: ExtraConfig;
@@ -14,18 +17,11 @@ export class RequestMatcher {
 	/**
 	 * Get local stub response depending on fetch input parameters.
 	 * Returns null if not found.
-	 * @param args Args passed to fetch
+	 * @param input request to be checked
+	 * @returns Response body as string. Returns null when there isn't any match
 	 */
-	async getResponse(args: any[]): Promise<Response | null> {
-		let input: Request;
-
-		if (args[0] instanceof Request) {
-			input = args[0];
-		}
-		else if (typeof args[0] === "string") {
-			input = new Request(args[0], args[1]);
-		}
-		else {
+	async getResponse(input?: IRequest): Promise<string | null> {
+		if (!input) {
 			return null;
 		}
 
@@ -58,9 +54,8 @@ export class RequestMatcher {
 			responseBody = d.responseJson;
 		}
 
-		let stringBody = JSON.stringify(responseBody);
-		let response = new Response(stringBody);
-		return response;
+		const stringBody = JSON.stringify(responseBody);
+		return stringBody;
 	}
 }
 
@@ -69,7 +64,7 @@ export class RequestMatcher {
  * @param input Request to match
  * @param match Request rules to check
  */
-export async function matches(input: Request, match: RequestDescriptor): Promise<boolean> {
+export async function matches(input: IRequest, match: RequestDescriptor): Promise<boolean> {
 	if (!match || !input) {
 		logError("Missing descriptor or input request");
 		return false;
@@ -156,7 +151,7 @@ export function matchQueries(inputUrl: UrlWithParsedQuery, matchQueries?: QueryM
  * @param input Request to match
  * @param matchBody Body rules to check
  */
-export async function matchBody(input: any, matchBody?: BodyMatcher): Promise<boolean> {
+export async function matchBody(input: IRequest, matchBody?: BodyMatcher): Promise<boolean> {
 	if (!matchBody) {
 		return true; // Nothing to match, so it matches
 	}

@@ -82,7 +82,6 @@ export type ExtraConfig = {
 	/**
 	 * Function that reads the response file.
 	 * If not specified, `defaultResponseFileRetriever` is used.
-	 * You can use `nodeResponseFileRetriever` in a node environment.
 	 * An exception is thrown when you have a descriptor that requires a response
 	 * file, but you didn't set `responseFileRetriever`.
 	 */

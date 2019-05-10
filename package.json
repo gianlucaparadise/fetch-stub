@@ -1,6 +1,6 @@
 {
   "name": "fetch-stub",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "This library wraps the fetch function and responds with a local json",
   "author": {
     "name": "gianlucaparadise",
@@ -36,9 +36,7 @@
     "typescript": "^3.4.5",
     "whatwg-fetch": "^2.0.4"
   },
-  "dependencies": {
-    "path": "^0.12.7"
-  },
+  "dependencies": {},
   "files": [
     "lib/**/*"
   ]
